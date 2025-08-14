@@ -1,2 +1,0 @@
-# StoreIt
-demo description
