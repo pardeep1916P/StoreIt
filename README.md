@@ -1,209 +1,84 @@
-# StoreIt - File Storage Application
+# StoreIt - Cloud File Storage Platform 🚀
 
-A modern file storage application built with Next.js frontend and Node.js backend, featuring AWS S3 integration and user authentication.
+A modern, scalable cloud file storage application built with **AWS serverless architecture**, featuring secure file management, real-time sharing, and intelligent storage optimization.
 
-## 🚀 Features
+## 🌟 Live Demo & Links
 
-- **File Upload & Management**: Drag & drop file uploads with progress tracking
-- **User Authentication**: Secure login/signup with AWS Cognito
-- **File Sharing**: Share files with other users
-- **File Preview**: Preview various file types (images, documents, videos)
-- **Responsive Design**: Mobile-friendly interface
-- **Real-time Updates**: Live file status updates
+- **🌐 Live Application**: [https://storeit-cloud-drive.vercel.app/](https://storeit-cloud-drive.vercel.app/)
+- **📁 GitHub Repository**: [https://github.com/pardeep1916P/StoreIt](https://github.com/pardeep1916P/StoreIt)
 
 ## 🏗️ Architecture
 
-- **Frontend**: Next.js 14 with TypeScript and Tailwind CSS
-- **Backend**: Node.js with Express.js
-- **Storage**: AWS S3 for file storage
-- **Database**: AWS DynamoDB for metadata
+### System Flow Diagram
+
+```mermaid
+graph LR
+    A[User] --> B[Vercel Frontend]
+    B --> C[AWS API Gateway]
+    C --> D[AWS Lambda]
+    D --> E[AWS DynamoDB]
+    D --> F[AWS S3]
+    D --> G[AWS Cognito]
+    
+    style A fill:#e1f5fe
+    style B fill:#f3e5f5
+    style C fill:#fff3e0
+    style D fill:#e8f5e8
+    style E fill:#e3f2fd
+    style F fill:#fce4ec
+    style G fill:#f1f8e9
+```
+
+## 🚀 Key Features
+
+- **📁 File Management**: Upload, download, and organize files
+- **🔐 Authentication**: Secure user login with AWS Cognito
+- **🤝 File Sharing**: Share files with other users
+- **💾 Cloud Storage**: Scalable storage with AWS S3
+- **📱 Responsive Design**: Works on all devices
+
+## 🛠️ Technology Stack
+
+- **Frontend**: Next.js 14, TypeScript, Tailwind CSS
+- **Backend**: AWS Lambda, API Gateway
+- **Database**: AWS DynamoDB
+- **Storage**: AWS S3
 - **Authentication**: AWS Cognito
-- **API**: RESTful API with AWS API Gateway
+- **Deployment**: Vercel
 
-## 📋 Prerequisites
+## 🚀 Getting Started
 
-- Node.js 18+ 
-- npm or yarn
-- AWS Account with appropriate permissions
+### Prerequisites
+- Node.js 18+
+- AWS Account
 - Git
 
-## 🛠️ Installation
-
-### 1. Clone the Repository
-
+### Quick Start
 ```bash
-git clone <your-repo-url>
-cd main1
-```
+# Clone repository
+git clone https://github.com/pardeep1916P/StoreIt.git
+cd StoreIt
 
-### 2. Backend Setup
-
-```bash
-cd backend
+# Install dependencies
 npm install
-cp env.example .env.local
-# Edit .env.local with your AWS credentials
-npm start
-```
 
-### 3. Frontend Setup
+# Configure environment variables
+cp .env.example .env.local
 
-```bash
-cd frontend
-npm install
-cp env.example .env.local
-# Edit .env.local with your API Gateway URL
+# Start development
 npm run dev
 ```
-
-## 🔐 Environment Configuration
-
-### Backend (.env.local)
-
-```bash
-# AWS Configuration
-AWS_ACCESS_KEY_ID=your_aws_access_key_id
-AWS_SECRET_ACCESS_KEY=your_aws_secret_access_key
-AWS_SESSION_TOKEN=your_aws_session_token
-AWS_REGION=ap-south-1
-
-# AWS Cognito Configuration
-USER_POOL_ID=your_user_pool_id
-CLIENT_ID=your_client_id
-CLIENT_SECRET=your_client_secret
-
-# DynamoDB Configuration
-TABLE_NAME=storeit-files
-
-# S3 Configuration
-BUCKET_NAME=storeit-files-bucket
-
-# Server Configuration
-PORT=3001
-NODE_ENV=development
-```
-
-### Frontend (.env.local)
-
-```bash
-# API Gateway Configuration
-NEXT_PUBLIC_API_GATEWAY_URL=your_api_gateway_url
-
-# AWS S3 Configuration
-NEXT_PUBLIC_S3_BUCKET_NAME=storeit-user-files
-NEXT_PUBLIC_AWS_REGION=ap-south-1
-
-# Next.js Configuration
-NEXT_PUBLIC_APP_NAME=StoreIt
-NEXT_PUBLIC_APP_VERSION=1.0.0
-
-# Development Configuration
-NODE_ENV=development
-```
-
-## 🚀 Running the Application
-
-### Development Mode
-
-```bash
-# Backend (Terminal 1)
-cd backend
-npm run dev
-
-# Frontend (Terminal 2)
-cd frontend
-npm run dev
-```
-
-### Production Mode
-
-```bash
-# Backend
-cd backend
-npm start
-
-# Frontend
-cd frontend
-npm run build
-npm start
-```
-
-## 📁 Project Structure
-
-```
-main1/
-├── backend/                 # Node.js backend server
-│   ├── index.mjs          # Main server file
-│   ├── utils/             # Utility functions
-│   └── package.json       # Backend dependencies
-├── frontend/               # Next.js frontend application
-│   ├── app/               # App router pages
-│   ├── components/        # Reusable components
-│   ├── lib/               # Utility libraries
-│   ├── public/            # Static assets
-│   └── package.json       # Frontend dependencies
-├── .gitignore             # Git ignore rules
-├── README.md              # This file
-└── env.example            # Environment examples
-```
-
-## 🔒 Security Features
-
-- Environment variables for sensitive configuration
-- AWS IAM roles and policies
-- Secure file upload validation
-- User authentication and authorization
-- HTTPS enforcement in production
-
-## 🧪 Testing
-
-```bash
-# Backend tests
-cd backend
-npm test
-
-# Frontend tests
-cd frontend
-npm test
-```
-
-## 📦 Deployment
-
-### Backend Deployment
-- Deploy to AWS Lambda or EC2
-- Configure environment variables
-- Set up API Gateway
-
-### Frontend Deployment
-- Build the application: `npm run build`
-- Deploy to Vercel, Netlify, or AWS S3
-- Configure environment variables
-
-## 🤝 Contributing
-
-1. Fork the repository
-2. Create a feature branch: `git checkout -b feature-name`
-3. Commit your changes: `git commit -am 'Add feature'`
-4. Push to the branch: `git push origin feature-name`
-5. Submit a pull request
 
 ## 📝 License
 
-This project is licensed under the MIT License.
-
-## 🆘 Support
-
-For support and questions:
-- Create an issue in the repository
-- Check the documentation
-- Review the code comments
-
-## 🔄 Version History
-
-- **v1.0.0**: Initial release with basic file storage functionality
-- **v1.1.0**: Added file sharing and user management
-- **v1.2.0**: Enhanced UI/UX and mobile responsiveness
+MIT License
 
 ---
 
-**Note**: Make sure to never commit your actual `.env.local` files as they contain sensitive information. The `.gitignore` file is configured to exclude these files automatically.
+**⭐ Star this repository if you find it helpful!**
+
+**🔗 Connect with me:**
+- **LinkedIn**: [Charan Chaitanya Devanaboyina](https://linkedin.com/in/chinnu-4a7174306)
+- **GitHub**: [@pardeep1916P](https://github.com/pardeep1916P)
+
+*Built with ❤️ using modern cloud technologies.*
