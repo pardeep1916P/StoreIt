@@ -19,14 +19,6 @@ graph LR
     D --> E[AWS DynamoDB]
     D --> F[AWS S3]
     D --> G[AWS Cognito]
-    
-    style A fill:#e1f5fe
-    style B fill:#f3e5f5
-    style C fill:#fff3e0
-    style D fill:#e8f5e8
-    style E fill:#e3f2fd
-    style F fill:#fce4ec
-    style G fill:#f1f8e9
 ```
 
 ## 🚀 Key Features
