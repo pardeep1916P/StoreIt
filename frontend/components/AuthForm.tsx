@@ -115,10 +115,6 @@ export const AuthForm = ({ type }: AuthFormProps) => {
     } catch (error) {
       const errorTitle = error instanceof Error && (error as any).title ? (error as any).title : "Error";
       const errorMessage = error instanceof Error ? error.message : "Something went wrong";
-      
-      // Vercel production build detection
-      const isVercel = process.env.VERCEL === '1';
-      
       // Only set help text for sign-up errors
       if (type === "sign-up") {
         if (errorMessage.includes('User already exists')) {
@@ -134,21 +130,11 @@ export const AuthForm = ({ type }: AuthFormProps) => {
         // Don't show help text for other errors
       }
       
-      // Vercel-specific toast error handling
-      try {
-        toast({
-          title: errorTitle,
-          description: errorMessage,
-          variant: "destructive",
-        });
-      } catch (vercelError) {
-        // Fallback for Vercel production builds if toast fails
-        console.error('Toast failed in Vercel:', vercelError);
-        // Use a simple alert as fallback
-        if (typeof window !== 'undefined') {
-          alert(`${errorTitle}: ${errorMessage}`);
-        }
-      }
+      toast({
+        title: errorTitle,
+        description: errorMessage,
+        variant: "destructive",
+      });
     } finally {
       setIsLoading(false);
     }
