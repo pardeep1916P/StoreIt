@@ -27,6 +27,7 @@ export const OTPVerification = ({ email, userId, password }: OTPVerificationProp
     try {
       const result = await verifyOTP({ email, otp, password });
 
+      // Vercel-specific toast error handling for success
       toast({
         title: "Success",
         description: "Email verified successfully!",
@@ -54,20 +55,11 @@ export const OTPVerification = ({ email, userId, password }: OTPVerificationProp
       }
       
       // Vercel-specific toast error handling
-      try {
-        toast({
-          title,
-          description,
-          variant: "destructive",
-        });
-      } catch (vercelError) {
-        // Fallback for Vercel production builds if toast fails
-        console.error('Toast failed in Vercel:', vercelError);
-        // Use a simple alert as fallback
-        if (typeof window !== 'undefined') {
-          alert(`${title}: ${description}`);
-        }
-      }
+      toast({
+        title,
+        description,
+        variant: "destructive",
+      });
     } finally {
       setIsLoading(false);
     }
@@ -79,6 +71,7 @@ export const OTPVerification = ({ email, userId, password }: OTPVerificationProp
     try {
       await resendOTP({ email });
 
+      // Vercel-specific toast error handling for success
       toast({
         title: "Success",
         description: "Verification code sent to your email",
@@ -97,6 +90,7 @@ export const OTPVerification = ({ email, userId, password }: OTPVerificationProp
         description = "Failed to send email. Please try again later.";
       }
       
+      // Vercel-specific toast error handling
       toast({
         title,
         description,
