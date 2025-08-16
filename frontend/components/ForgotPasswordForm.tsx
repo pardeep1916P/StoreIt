@@ -46,6 +46,9 @@ export const ForgotPasswordForm = () => {
       } else if (errorMessage.includes('Invalid email format')) {
         title = "Invalid Email";
         description = "Please enter a valid email address.";
+      } else if (errorMessage.includes('Too many attempts')) {
+        title = "Too Many Attempts";
+        description = "Please wait before trying again.";
       }
       
       toast({
@@ -86,6 +89,7 @@ export const ForgotPasswordForm = () => {
         description = "Unable to verify your account. Please try again.";
       }
       
+      // Vercel-specific toast error handling
       toast({
         title,
         description,
@@ -122,10 +126,19 @@ export const ForgotPasswordForm = () => {
 
     try {
       await resetPassword({ email, resetCode: otp, newPassword });
-      toast({
-        title: "Success",
-        description: "Password reset successfully!",
-      });
+      
+      try {
+        toast({
+          title: "Success",
+          description: "Password reset successfully!",
+        });
+      } catch (vercelError) {
+        console.error('Toast failed in Vercel:', vercelError);
+        if (typeof window !== 'undefined') {
+          alert("Success: Password reset successfully!");
+        }
+      }
+      
       router.push("/sign-in");
     } catch (error) {
       // Handle specific error cases
@@ -147,6 +160,7 @@ export const ForgotPasswordForm = () => {
         description = "No account found with this email address.";
       }
       
+      // Vercel-specific toast error handling
       toast({
         title,
         description,
@@ -160,10 +174,18 @@ export const ForgotPasswordForm = () => {
   const handleResendCode = async () => {
     try {
       await resendOTP({ email });
-      toast({
-        title: "Success",
-        description: "Reset code resent to your email",
-      });
+
+      try {
+        toast({
+          title: "Success",
+          description: "Verification code sent to your email",
+        });
+      } catch (vercelError) {
+        console.error('Toast failed in Vercel:', vercelError);
+        if (typeof window !== 'undefined') {
+          alert("Success: Verification code sent to your email");
+        }
+      }
     } catch (error) {
       // Handle specific error cases
       const errorMessage = error instanceof Error ? error.message : "Failed to resend code";
