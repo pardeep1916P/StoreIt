@@ -53,11 +53,21 @@ export const OTPVerification = ({ email, userId, password }: OTPVerificationProp
         description = "No account found with this email address.";
       }
       
-      toast({
-        title,
-        description,
-        variant: "destructive",
-      });
+      // Vercel-specific toast error handling
+      try {
+        toast({
+          title,
+          description,
+          variant: "destructive",
+        });
+      } catch (vercelError) {
+        // Fallback for Vercel production builds if toast fails
+        console.error('Toast failed in Vercel:', vercelError);
+        // Use a simple alert as fallback
+        if (typeof window !== 'undefined') {
+          alert(`${title}: ${description}`);
+        }
+      }
     } finally {
       setIsLoading(false);
     }
