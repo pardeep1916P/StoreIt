@@ -133,7 +133,37 @@ const smartHttpClient = async (url: string, options: RequestInit, retryCount = 0
 
 const handleError = (error: unknown, message: string) => {
   console.log(error, message);
-  throw error;
+  
+  // Vercel production build detection
+  const isVercel = process.env.VERCEL === '1';
+  
+  // If it's already a custom error with title, preserve it
+  if (error instanceof Error && (error as any).title) {
+    throw error;
+  }
+  
+  // If it's a custom error from our API responses, preserve the structure
+  if (error instanceof Error && error.message) {
+    const customError = new Error(error.message);
+    (customError as any).title = "Error";
+    throw customError;
+  }
+  
+  // Vercel-specific error handling for production builds
+  if (isVercel && error instanceof Error) {
+    // Handle Vercel's "Server Components render" errors
+    if (error.message.includes('Server Components render') || 
+        error.message.includes('specific message is omitted in production builds')) {
+      const vercelError = new Error('Authentication failed. Please check your credentials.');
+      (vercelError as any).title = "Error";
+      throw vercelError;
+    }
+  }
+  
+  // Fallback: create a generic error
+  const genericError = new Error(message);
+  (genericError as any).title = "Error";
+  throw genericError;
 };
 
 export const signUp = async ({
@@ -206,7 +236,7 @@ export const signUp = async ({
     const result = await response.json();
     return result;
   } catch (error) {
-    handleError(error, "Failed to sign up");
+    return handleError(error, "Failed to sign up");
   }
 };
 
@@ -305,7 +335,7 @@ export const verifyOTP = async ({
 
     return result;
   } catch (error) {
-    handleError(error, "Failed to verify OTP");
+    return handleError(error, "Failed to verify OTP");
   }
 };
 
@@ -363,7 +393,7 @@ export const resendOTP = async ({
     const result = await response.json();
     return result;
   } catch (error) {
-    handleError(error, "Failed to resend OTP");
+    return handleError(error, "Failed to resend OTP");
   }
 };
 
@@ -447,7 +477,7 @@ export const signIn = async ({
     
     return result;
   } catch (error) {
-    handleError(error, "Failed to sign in");
+    return handleError(error, "Failed to sign in");
   }
 };
 
@@ -505,7 +535,7 @@ export const forgotPassword = async ({
     const result = await response.json();
     return result;
   } catch (error) {
-    handleError(error, "Failed to send reset code");
+    return handleError(error, "Failed to send reset code");
   }
 };
 
@@ -570,7 +600,7 @@ export const resetPassword = async ({
     const result = await response.json();
     return result;
   } catch (error) {
-    handleError(error, "Failed to reset password");
+    return handleError(error, "Failed to reset password");
   }
 };
 
@@ -580,7 +610,7 @@ export const signOut = async () => {
     cookieStore.delete('aws-session');
     redirect('/sign-in');
   } catch (error) {
-    handleError(error, "Failed to sign out");
+    return handleError(error, "Failed to sign out");
   }
 };
 
@@ -697,6 +727,6 @@ export const verifyResetOTP = async ({
     const result = await response.json();
     return result;
   } catch (error) {
-    handleError(error, "Failed to verify reset code");
+    return handleError(error, "Failed to verify reset code");
   }
 };
